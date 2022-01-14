@@ -1,0 +1,2 @@
+class OutboundCoordinates(Exception):
+    pass
