@@ -19,3 +19,11 @@ while True:
 
     # plot map
 ```
+
+### Testing
+
+To run the tests execute the following command:
+
+```python
+python -m unittest tests.py
+```
