@@ -1,15 +1,18 @@
 from abc import ABC
 import numpy as np
-from exceptions import OutboundCoordinates
+from .exceptions import OutboundCoordinates
 
 class Coordinates:
 
     x: int
     y: int
 
+    def __str__(self) -> str:
+        return f'({self.x}, {self.y})'
+
     def __init__(self, x: int, y: int) -> None:
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
 
 class Tracker(ABC):
 
@@ -39,6 +42,11 @@ class TrackerMap(Tracker):
         if self.__invalid_coordinates(coordinates):
             raise OutboundCoordinates
 
+        coordinates.x = coordinates.x - self.initial_coordinates.x
+        coordinates.y = coordinates.y - self.initial_coordinates.y
+
+        print(coordinates)
+
         self.__update_map(coordinates)
         super().update_coordinates(coordinates)
 
@@ -50,8 +58,8 @@ class TrackerMap(Tracker):
         return False
 
     def __update_map(self, coordinates: Coordinates) -> None:
-        self._map[self.current_coordinates.x, self.current_coordinates.y, 0] = 127
-        self._map[coordinates.x, coordinates.y, 0] = 255
+        self._map[self.current_coordinates.x, self.current_coordinates.y, 0] = 0.5
+        self._map[coordinates.x, coordinates.y, 0] = 1
 
     def get_map(self):
         return self._map

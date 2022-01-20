@@ -1,1 +1,1 @@
-from tracker import TrackerMap, Coordinates
+from .tracker import TrackerMap, Coordinates, Tracker
