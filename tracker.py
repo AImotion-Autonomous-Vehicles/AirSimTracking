@@ -22,7 +22,13 @@ class Tracker:
         self._coordinates = [Coordinates(0,0)]
 
     def update_coordinates(self, coordinates: Coordinates) -> None:
-        if coordinates == self._coordinates[len(self._coordinates)-1]:
+        coordinates.x -= self._initial_coordinates.x
+        coordinates.y -= self._initial_coordinates.y
+
+        if coordinates.x == self._coordinates[len(self._coordinates)-1].x:
+            return
+
+        if coordinates.y == self._coordinates[len(self._coordinates)-1].y:
             return
 
         self._coordinates.append(coordinates)
