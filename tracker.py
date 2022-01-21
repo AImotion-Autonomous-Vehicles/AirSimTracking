@@ -1,6 +1,7 @@
 from abc import ABC
 import numpy as np
 from exceptions import OutboundCoordinates
+import matplotlib.pyplot as plt
 
 class Coordinates:
 
@@ -55,3 +56,28 @@ class TrackerMap(Tracker):
 
     def get_map(self):
         return self._map
+
+class TrackerPlot(Tracker):
+    def __init__(self, initial_coordinates: Coordinates, bounds: 100) -> None:
+        super().__init__(initial_coordinates)
+        self.__BOUNDS = bounds
+
+    def update_coordinates(self, coordinates: Coordinates) -> None:
+        if self.__invalid_coordinates(coordinates):
+            raise OutboundCoordinates
+
+        self.__update_plot(coordinates)
+        super().update_coordinates(coordinates)
+
+    def __invalid_coordinates(self, coordinates: Coordinates) -> bool:
+        if coordinates.x < -self.__BOUNDS or coordinates.x >= self.__BOUNDS:
+            return True
+        if coordinates.y < -self.__BOUNDS or coordinates.y >= self.__BOUNDS:
+            return True
+        return False
+
+    def __update_plot(self, coordinates: Coordinates) -> None:
+        plt.scatter(coordinates.x, coordinates.y)
+
+    def show_plot(self):
+        plt.show()
