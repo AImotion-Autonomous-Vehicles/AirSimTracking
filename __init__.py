@@ -1,1 +1,3 @@
-from .tracker import Coordinates, Tracker
+from .tracker import Tracker
+from .coordinates import Coordinates
+from .cartesian import CartesianPlane
