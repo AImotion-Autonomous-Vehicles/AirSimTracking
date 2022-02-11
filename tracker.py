@@ -1,5 +1,6 @@
-from typing import List
 from .coordinates import Coordinates
+from typing import List
+import csv
 
 class Tracker:
 
@@ -24,3 +25,16 @@ class Tracker:
 
     def get_coordinates(self) -> List[Coordinates]:
         return self._coordinates
+
+    def save_coordinates(self) -> None:
+        with open('results.csv','w') as csv_file:
+            fieldnames = ['x', 'y', 'timestamp']
+            writer = csv.DictWriter(csv_file, fieldnames=fieldnames, lineterminator = '\n')
+            writer.writeheader()
+
+            for coordinate in self._coordinates:
+                writer.writerow({
+                    'x': str(coordinate.x),
+                    'y': str(coordinate.y),
+                    'timestamp': str(coordinate.timestamp)
+                })
