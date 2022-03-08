@@ -2,6 +2,8 @@ from .coordinates import Coordinates
 from typing import List
 import csv
 
+# TODO: Implementar método estático load, para transformar o csv em objeto novamente!
+
 class Tracker:
 
     _initial_coordinates: Coordinates
@@ -26,8 +28,8 @@ class Tracker:
     def get_coordinates(self) -> List[Coordinates]:
         return self._coordinates
 
-    def save_coordinates(self) -> None:
-        with open('results.csv','w') as csv_file:
+    def save_coordinates(self, path: str) -> None:
+        with open(path,'w') as csv_file:
             fieldnames = ['x', 'y', 'timestamp']
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames, lineterminator = '\n')
             writer.writeheader()
