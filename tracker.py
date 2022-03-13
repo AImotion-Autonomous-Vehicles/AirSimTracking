@@ -1,15 +1,25 @@
 from .coordinates import Coordinates
 from typing import List
 import csv
-
-# TODO: Implementar método estático load, para transformar o csv em objeto novamente!
+import pandas as pd
 
 class Tracker:
+
+    @staticmethod
+    def load(csv_path: str):
+        airsim_results = pd.read_csv(csv_path, encoding='utf-8')
+
+        tracker = Tracker()
+        for index, row in airsim_results.iterrows():
+            coordinates = Coordinates(row['x'], row['y'])
+            tracker.update_coordinates(coordinates)
+
+        return tracker
 
     _initial_coordinates: Coordinates
     _coordinates: List[Coordinates]
 
-    def __init__(self, initial_coordinates: Coordinates) -> None:
+    def __init__(self, initial_coordinates: Coordinates = Coordinates(0.0,0.0)) -> None:
         self._initial_coordinates = initial_coordinates
         self._coordinates = [Coordinates(0.0,0.0)]
 
